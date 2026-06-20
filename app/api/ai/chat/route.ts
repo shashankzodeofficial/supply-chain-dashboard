@@ -1,4 +1,6 @@
 import { streamText } from 'ai'
+
+export const dynamic = 'force-dynamic'
 import { createAnthropic } from '@ai-sdk/anthropic'
 import { prisma } from '@/lib/prisma'
 import { createClient } from '@/lib/supabase-server'
