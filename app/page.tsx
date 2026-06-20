@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { prisma } from '@/lib/prisma'
 import { topNextBestActions, stalledGoals, roiScore } from '@/lib/scoring'
 import type { Goal } from '@/types'
