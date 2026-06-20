@@ -2,8 +2,6 @@ import Anthropic from '@anthropic-ai/sdk'
 import { allTools } from './tools'
 import { executeTool } from './toolExecutor'
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
-
 export async function runAgent({
   systemPrompt,
   userMessage,
@@ -15,6 +13,7 @@ export async function runAgent({
   agentTools: string[]
   maxIterations?: number
 }) {
+  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
   const tools = allTools.filter(t => agentTools.includes(t.name))
   const messages: Anthropic.MessageParam[] = [
     { role: 'user', content: userMessage }

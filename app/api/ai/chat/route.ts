@@ -7,9 +7,8 @@ import { createClient } from '@/lib/supabase-server'
 import { topNextBestActions, stalledGoals, roiScore } from '@/lib/scoring'
 import type { Goal } from '@/types'
 
-const anthropic = createAnthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
-
 export async function POST(req: Request) {
+  const anthropic = createAnthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return new Response('Unauthorized', { status: 401 })
