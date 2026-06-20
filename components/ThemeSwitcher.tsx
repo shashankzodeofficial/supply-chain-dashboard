@@ -14,7 +14,9 @@ export default function ThemeSwitcher() {
   const [theme, setTheme] = useState<Theme>('frost')
 
   useEffect(() => {
-    const saved = (localStorage.getItem('sc-theme') as Theme) || 'frost'
+    const hash = window.location.hash.replace('#', '') as Theme
+    const valid: Theme[] = ['frost', 'apex', 'summit']
+    const saved = valid.includes(hash) ? hash : ((localStorage.getItem('sc-theme') as Theme) || 'frost')
     setTheme(saved)
     document.documentElement.setAttribute('data-theme', saved)
   }, [])
