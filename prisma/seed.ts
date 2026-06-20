@@ -1,0 +1,191 @@
+import { PrismaClient, GoalStream, Category, GoalStatus, Priority } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+const USER_ID = 'shashank-user-id' // Replace with your actual Supabase user ID after login
+
+const goals = [
+  {
+    name: 'Logistics Intelligence Website',
+    goalStream: GoalStream.GOAL_1,
+    category: Category.STRATEGY,
+    status: GoalStatus.NOT_STARTED,
+    priority: Priority.HIGH,
+    impact: 8,
+    effort: 3,
+    completion: 0,
+    timeline: 'Year 1 Q3 2026',
+    targetDate: new Date('2026-09-30'),
+    nextAction: 'Register domain · set up About + 2 case studies pages',
+  },
+  {
+    name: 'Transport Control Tower (SaaS)',
+    goalStream: GoalStream.GOAL_1,
+    category: Category.EXECUTION,
+    status: GoalStatus.NOT_STARTED,
+    priority: Priority.HIGH,
+    impact: 10,
+    effort: 9,
+    completion: 0,
+    timeline: 'Year 2 2027',
+    targetDate: new Date('2027-12-31'),
+    nextAction: 'Define MVP modules: Live Tracking + Delay Prediction Engine first',
+  },
+  {
+    name: 'Delivery Management App',
+    goalStream: GoalStream.GOAL_1,
+    category: Category.EXECUTION,
+    status: GoalStatus.NOT_STARTED,
+    priority: Priority.MEDIUM,
+    impact: 8,
+    effort: 8,
+    completion: 0,
+    timeline: 'Year 2 2027',
+    targetDate: new Date('2027-12-31'),
+    nextAction: 'Wireframe 3 sides: customer · driver · operations',
+  },
+  {
+    name: 'AI Supply Chain Copilot',
+    goalStream: GoalStream.GOAL_1,
+    category: Category.STRATEGY,
+    status: GoalStatus.BLOCKED,
+    priority: Priority.HIGH,
+    impact: 10,
+    effort: 9,
+    completion: 0,
+    timeline: 'Year 2 2027',
+    targetDate: new Date('2027-06-30'),
+    nextAction: 'Complete Exception Library first · then define top 10 Q&A pairs for MVP',
+    notes: 'Blocked by Exception Library — must document operational knowledge base first',
+  },
+  {
+    name: 'Network Design Simulator',
+    goalStream: GoalStream.GOAL_1,
+    category: Category.EXECUTION,
+    status: GoalStatus.NOT_STARTED,
+    priority: Priority.HIGH,
+    impact: 9,
+    effort: 7,
+    completion: 0,
+    timeline: 'Year 2 2027',
+    targetDate: new Date('2027-12-31'),
+    nextAction: 'Build input form: orders/day · geography · service promise',
+  },
+  {
+    name: 'Warehouse Design Engine',
+    goalStream: GoalStream.GOAL_1,
+    category: Category.EXECUTION,
+    status: GoalStatus.NOT_STARTED,
+    priority: Priority.MEDIUM,
+    impact: 8,
+    effort: 7,
+    completion: 0,
+    timeline: 'Year 2 2027',
+    targetDate: new Date('2027-12-31'),
+    nextAction: 'Define inputs: SKU count · inventory turns · throughput',
+  },
+  {
+    name: 'Exception Library',
+    goalStream: GoalStream.GOAL_1,
+    category: Category.OPERATIONS,
+    status: GoalStatus.NOT_STARTED,
+    priority: Priority.HIGH,
+    impact: 9,
+    effort: 5,
+    completion: 0,
+    timeline: 'Year 1 Q4 2026',
+    targetDate: new Date('2026-12-31'),
+    nextAction: 'Document 10 inbound exceptions with root cause · countermeasure · owner · frequency',
+    notes: 'UNLOCK KEY: completing this unblocks AI Copilot. Highest strategic dependency in portfolio.',
+  },
+  {
+    name: 'Mechanism Deployment Framework',
+    goalStream: GoalStream.GOAL_1,
+    category: Category.STRATEGY,
+    status: GoalStatus.NOT_STARTED,
+    priority: Priority.MEDIUM,
+    impact: 8,
+    effort: 4,
+    completion: 0,
+    timeline: 'Year 1 Q4 2026',
+    targetDate: new Date('2026-12-31'),
+    nextAction: 'Document the 12-step framework · create consulting methodology PDF',
+  },
+  {
+    name: 'Cost Optimization Engine',
+    goalStream: GoalStream.GOAL_1,
+    category: Category.EXECUTION,
+    status: GoalStatus.NOT_STARTED,
+    priority: Priority.MEDIUM,
+    impact: 8,
+    effort: 7,
+    completion: 0,
+    timeline: 'Year 2 2027',
+    targetDate: new Date('2027-12-31'),
+    nextAction: 'Start with line haul + route consolidation modules',
+  },
+  {
+    name: 'LinkedIn Content Engine',
+    goalStream: GoalStream.GOAL_1,
+    category: Category.EXECUTION,
+    status: GoalStatus.NOT_STARTED,
+    priority: Priority.HIGH,
+    impact: 7,
+    effort: 2,
+    completion: 0,
+    timeline: 'Year 1 Q3 2026 — ongoing',
+    nextAction: 'Write and publish first post: "Why FCs fail during peak season"',
+    notes: 'HIGHEST ROI (3.5) in entire portfolio. 15 min per post. Start TODAY.',
+  },
+  {
+    name: 'Supply Chain Academy',
+    goalStream: GoalStream.GOAL_1,
+    category: Category.LEARNING,
+    status: GoalStatus.NOT_STARTED,
+    priority: Priority.MEDIUM,
+    impact: 7,
+    effort: 6,
+    completion: 0,
+    timeline: 'Year 3 2028',
+    targetDate: new Date('2028-12-31'),
+    nextAction: 'Not yet — outline Warehouse Design 101 curriculum after website + content traction',
+    notes: 'Year 3 initiative. Do not start before LinkedIn presence and website are established.',
+  },
+  {
+    name: 'Order Management System (OMS)',
+    goalStream: GoalStream.GOAL_2,
+    category: Category.EXECUTION,
+    status: GoalStatus.NOT_STARTED,
+    priority: Priority.HIGH,
+    impact: 10,
+    effort: 9,
+    completion: 0,
+    timeline: 'Year 2–3 2027–2028',
+    targetDate: new Date('2028-06-30'),
+    nextAction: 'Define OMS MVP: Order Capture + Inventory Visibility + Routing Engine modules',
+    notes: '9 core modules defined. Vision: "One platform to orchestrate orders, inventory, fulfilment, transportation, and customer communication."',
+  },
+]
+
+async function main() {
+  console.log('Seeding Supply Chain Dashboard...')
+
+  for (const goal of goals) {
+    const created = await prisma.goal.upsert({
+      where: { id: `seed-${goal.name.toLowerCase().replace(/\s+/g, '-').slice(0, 30)}` },
+      update: {},
+      create: {
+        id: `seed-${goal.name.toLowerCase().replace(/\s+/g, '-').slice(0, 30)}`,
+        userId: USER_ID,
+        ...goal,
+      },
+    })
+    console.log(`  ✓ ${created.name}`)
+  }
+
+  console.log(`\nSeeded ${goals.length} goals. Dashboard is ready.`)
+}
+
+main()
+  .catch(e => { console.error(e); process.exit(1) })
+  .finally(() => prisma.$disconnect())

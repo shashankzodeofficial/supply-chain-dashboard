@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum GoalStream {
+  GOAL_1
+  GOAL_2
+}
+
+enum Category {
+  STRATEGY
+  EXECUTION
+  OPERATIONS
+  LEARNING
+}
+
+enum GoalStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  BLOCKED
+  COMPLETED
+}
+
+enum Priority {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum ActivityType {
+  STATUS_CHANGE
+  PROGRESS_UPDATE
+  TASK_COMPLETED
+  NOTE_ADDED
+  GOAL_CREATED
+}
+
+enum AlertType {
+  STALL
+  DEADLINE
+  DRIFT
+  BLOCKER
+}
+
+model Goal {
+  id          String     @id @default(cuid())
+  userId      String
+  name        String
+  goalStream  GoalStream
+  category    Category
+  status      GoalStatus @default(NOT_STARTED)
+  priority    Priority   @default(MEDIUM)
+  impact      Int
+  effort      Int
+  completion  Int        @default(0)
+  timeline    String
+  targetDate  DateTime?
+  nextAction  String
+  notes       String?
+  deletedAt   DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  tasks        Task[]
+  activityLogs ActivityLog[]
+  alerts       Alert[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([goalStream])
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  goalId      String
+  title       String
+  done        Boolean   @default(false)
+  dueDate     DateTime?
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  goal Goal @relation(fields: [goalId], references: [id], onDelete: Cascade)
+
+  @@index([goalId])
+}
+
+model ActivityLog {
+  id        String       @id @default(cuid())
+  goalId    String
+  type      ActivityType
+  prevValue String?
+  newValue  String?
+  createdAt DateTime     @default(now())
+
+  goal Goal @relation(fields: [goalId], references: [id], onDelete: Cascade)
+
+  @@index([goalId])
+  @@index([createdAt])
+}
+
+model WeeklyPlan {
+  id             String   @id @default(cuid())
+  userId         String
+  weekStart      DateTime
+  focusGoalIds   String[]
+  deferGoalIds   String[]
+  risks          String[]
+  topActions     Json
+  createdAt      DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Alert {
+  id        String    @id @default(cuid())
+  userId    String
+  goalId    String?
+  type      AlertType
+  message   String
+  dismissed Boolean   @default(false)
+  createdAt DateTime  @default(now())
+
+  goal Goal? @relation(fields: [goalId], references: [id], onDelete: SetNull)
+
+  @@index([userId, dismissed])
+}
