@@ -1,3 +1,242 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ─── BASE ─────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+html, body {
+  min-height: 100vh;
+  transition: background 0.6s ease, color 0.3s ease;
+}
+
+/* ══════════════════════════════════════════════════════════
+   THEME 1 · FROST  — Frosted Glass Command Center
+   Mesh gradient: deep arctic ocean with light refractions
+   ══════════════════════════════════════════════════════════ */
+[data-theme="frost"] body {
+  background-color: #020917;
+  background-image:
+    radial-gradient(ellipse 90% 70% at 15% 10%,  rgba(56,189,248,0.28)  0%, transparent 55%),
+    radial-gradient(ellipse 70% 60% at 85% 15%,  rgba(99,102,241,0.30)  0%, transparent 55%),
+    radial-gradient(ellipse 80% 80% at 50% 90%,  rgba(6,182,212,0.22)   0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 75%,  rgba(14,165,233,0.18)  0%, transparent 50%),
+    radial-gradient(ellipse 100% 100% at 50% 50%, #020917 30%, #041226 100%);
+  color: #e2eeff;
+}
+
+[data-theme="frost"] .db-card {
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.13);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.10);
+}
+[data-theme="frost"] .db-card:hover {
+  background: rgba(255,255,255,0.11);
+  border-color: rgba(125,211,252,0.35);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(125,211,252,0.15), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+[data-theme="frost"] .db-title     { color: #f0f8ff; }
+[data-theme="frost"] .db-subtitle  { color: rgba(186,220,255,0.55); }
+[data-theme="frost"] .db-label     { color: rgba(186,220,255,0.5); }
+[data-theme="frost"] .db-value     { color: #ffffff; }
+[data-theme="frost"] .db-body      { color: rgba(186,220,255,0.75); }
+[data-theme="frost"] .db-muted     { color: rgba(186,220,255,0.45); }
+[data-theme="frost"] .db-divider   { border-color: rgba(255,255,255,0.07); }
+[data-theme="frost"] .db-section-label { color: rgba(125,211,252,0.6); letter-spacing: 0.1em; }
+[data-theme="frost"] .db-badge-roi {
+  background: rgba(125,211,252,0.15);
+  color: #7dd3fc;
+  border: 1px solid rgba(125,211,252,0.25);
+}
+[data-theme="frost"] .db-badge-nba {
+  background: rgba(99,102,241,0.2);
+  color: #a5b4fc;
+  width: 1.5rem; height: 1.5rem;
+  border: 1px solid rgba(99,102,241,0.35);
+}
+[data-theme="frost"] .db-progress-bg   { background: rgba(255,255,255,0.1); }
+[data-theme="frost"] .db-progress-fill { background: linear-gradient(90deg, #38bdf8, #818cf8); }
+[data-theme="frost"] .db-warning {
+  background: rgba(251,191,36,0.1);
+  border-color: rgba(251,191,36,0.25);
+  color: #fde68a;
+}
+[data-theme="frost"] .theme-switcher {
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   THEME 2 · APEX  — Aurora Command / Space Leadership
+   Mesh: deep cosmos with aurora borealis purple+emerald
+   ══════════════════════════════════════════════════════════ */
+[data-theme="apex"] body {
+  background-color: #07040f;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 0%   20%,  rgba(124,58,237,0.35)  0%, transparent 55%),
+    radial-gradient(ellipse 60% 70% at 100% 80%,  rgba(16,185,129,0.28)  0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 60%  0%,   rgba(59,130,246,0.20)  0%, transparent 50%),
+    radial-gradient(ellipse 50% 60% at 30%  95%,  rgba(236,72,153,0.15)  0%, transparent 50%),
+    radial-gradient(ellipse 100% 100% at 50% 50%, #07040f 25%, #0c0818 100%);
+  color: #e8e0ff;
+}
+
+[data-theme="apex"] .db-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(139,92,246,0.20);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 0 0 0 rgba(139,92,246,0);
+  transition: all 0.25s ease;
+}
+[data-theme="apex"] .db-card:hover {
+  background: rgba(139,92,246,0.08);
+  border-color: rgba(139,92,246,0.40);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 20px rgba(139,92,246,0.12);
+}
+[data-theme="apex"] .db-title     { color: #f3f0ff; }
+[data-theme="apex"] .db-subtitle  { color: rgba(196,181,253,0.55); }
+[data-theme="apex"] .db-label     { color: rgba(196,181,253,0.5); }
+[data-theme="apex"] .db-value     { color: #ffffff; }
+[data-theme="apex"] .db-body      { color: rgba(196,181,253,0.8); }
+[data-theme="apex"] .db-muted     { color: rgba(196,181,253,0.4); }
+[data-theme="apex"] .db-divider   { border-color: rgba(139,92,246,0.12); }
+[data-theme="apex"] .db-section-label { color: rgba(167,139,250,0.65); letter-spacing: 0.1em; }
+[data-theme="apex"] .db-badge-roi {
+  background: rgba(16,185,129,0.15);
+  color: #6ee7b7;
+  border: 1px solid rgba(16,185,129,0.25);
+}
+[data-theme="apex"] .db-badge-nba {
+  background: rgba(139,92,246,0.25);
+  color: #c4b5fd;
+  width: 1.5rem; height: 1.5rem;
+  border: 1px solid rgba(139,92,246,0.4);
+}
+[data-theme="apex"] .db-progress-bg   { background: rgba(139,92,246,0.12); }
+[data-theme="apex"] .db-progress-fill { background: linear-gradient(90deg, #7c3aed, #10b981); }
+[data-theme="apex"] .db-warning {
+  background: rgba(251,191,36,0.08);
+  border-color: rgba(251,191,36,0.2);
+  color: #fde68a;
+}
+[data-theme="apex"] .theme-switcher {
+  background: rgba(15,8,30,0.8);
+  border: 1px solid rgba(139,92,246,0.25);
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   THEME 3 · SUMMIT  — Executive Gold / Boardroom Power
+   Mesh: rich dark mocha with antique gold warmth
+   ══════════════════════════════════════════════════════════ */
+[data-theme="summit"] body {
+  background-color: #0c0700;
+  background-image:
+    radial-gradient(ellipse 70% 55% at 90%  10%,  rgba(234,179,8,0.22)   0%, transparent 55%),
+    radial-gradient(ellipse 60% 60% at 5%   85%,  rgba(180,83,9,0.28)    0%, transparent 55%),
+    radial-gradient(ellipse 80% 50% at 50%  50%,  rgba(120,53,15,0.18)   0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 75%  90%,  rgba(202,138,4,0.15)   0%, transparent 50%),
+    radial-gradient(ellipse 100% 100% at 50% 50%, #0c0700 30%, #150e00 100%);
+  color: #f5e6c8;
+}
+
+[data-theme="summit"] .db-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(212,175,55,0.18);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(212,175,55,0.08);
+  transition: all 0.25s ease;
+}
+[data-theme="summit"] .db-card:hover {
+  background: rgba(212,175,55,0.07);
+  border-color: rgba(212,175,55,0.40);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 24px rgba(212,175,55,0.10);
+}
+[data-theme="summit"] .db-title     { color: #fff8e8; }
+[data-theme="summit"] .db-subtitle  { color: rgba(212,175,55,0.50); }
+[data-theme="summit"] .db-label     { color: rgba(212,175,55,0.45); }
+[data-theme="summit"] .db-value     { color: #fff8e8; }
+[data-theme="summit"] .db-body      { color: rgba(245,230,200,0.75); }
+[data-theme="summit"] .db-muted     { color: rgba(212,175,55,0.40); }
+[data-theme="summit"] .db-divider   { border-color: rgba(212,175,55,0.10); }
+[data-theme="summit"] .db-section-label { color: rgba(212,175,55,0.60); letter-spacing: 0.1em; }
+[data-theme="summit"] .db-badge-roi {
+  background: rgba(212,175,55,0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(212,175,55,0.28);
+}
+[data-theme="summit"] .db-badge-nba {
+  background: rgba(180,83,9,0.30);
+  color: #fed7aa;
+  width: 1.5rem; height: 1.5rem;
+  border: 1px solid rgba(212,175,55,0.35);
+}
+[data-theme="summit"] .db-progress-bg   { background: rgba(212,175,55,0.10); }
+[data-theme="summit"] .db-progress-fill { background: linear-gradient(90deg, #b45309, #d97706, #fbbf24); }
+[data-theme="summit"] .db-warning {
+  background: rgba(251,191,36,0.10);
+  border-color: rgba(251,191,36,0.22);
+  color: #fde68a;
+}
+[data-theme="summit"] .theme-switcher {
+  background: rgba(12,7,0,0.85);
+  border: 1px solid rgba(212,175,55,0.22);
+}
+
+
+/* ─── SHARED CARD TRANSITIONS ───────────────────────────── */
+.db-card {
+  border-radius: 1rem;
+  padding: 1.25rem;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.db-badge-nba {
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.db-badge-roi {
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  display: inline-block;
+  margin-top: 0.25rem;
+}
+
+/* ─── THEME SWITCHER WIDGET ─────────────────────────────── */
+.theme-switcher {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 50;
+  border-radius: 999px;
+  padding: 0.4rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.theme-dot {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.theme-dot:hover { transform: scale(1.2); }
+.theme-dot.active { border-color: rgba(255,255,255,0.9); transform: scale(1.15); }
+.theme-dot-frost  { background: linear-gradient(135deg, #38bdf8, #818cf8); }
+.theme-dot-apex   { background: linear-gradient(135deg, #7c3aed, #10b981); }
+.theme-dot-summit { background: linear-gradient(135deg, #d97706, #fbbf24); }
